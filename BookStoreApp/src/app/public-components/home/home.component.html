@@ -1,0 +1,15 @@
+<p #title>home works!</p>
+
+<button #counterBtn (click)="inc()" mat-raised-button>Counter ++</button>
+<button (click)="dec()">Counter --</button>
+
+<p>Counter = {{_counterService.counter}}</p>
+
+<p>title = {{titleObj.title}}</p>
+<p>title = {{titleObj.desc}}</p>
+
+<button (click)="authors.setData(64)">Click to pass using template</button>
+
+<p>Data from child : {{_testService.myData}}</p>
+
+<app-authors (myData)="getFromChild($event)" #authors [data]="_counterService.counter" [show]="_counterService.counter > 4"></app-authors>

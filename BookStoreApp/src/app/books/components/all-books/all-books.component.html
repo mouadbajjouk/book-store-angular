@@ -1,0 +1,13 @@
+<h2>Books</h2>
+
+<a routerLink="recent">Recent Books</a>
+
+<button (click)="inc()">Counter ++</button>
+<button (click)="dec()">Counter --</button>
+
+<p>Counter = {{_counterService.counter}}</p>
+
+<button mat-raised-button color="primary" [routerLink]="'new'">Add new book</button> <br><br>
+<button mat-raised-button color="primary" [routerLink]="'new-reactive'">Add new book reactive</button>
+
+<app-book-card [allBooks]="books"></app-book-card>

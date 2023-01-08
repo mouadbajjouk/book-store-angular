@@ -1,23 +1,5 @@
-<div class="container-fluid bg-dark shadow-sm">
-    <header class="d-flex justify-content-center py-3">
-      <ul class="nav nav-pills">
-        <li class="nav-item"><a href="#" class="nav-link active" aria-current="page">Home</a></li>
-        <li class="nav-item"><a href="#" class="nav-link">Features</a></li>
-        <li class="nav-item"><a href="#" class="nav-link">Pricing</a></li>
-        <li class="nav-item"><a href="#" class="nav-link">FAQs</a></li>
-        <li class="nav-item"><a href="#" class="nav-link">About</a></li>
-      </ul>
-    </header>
-  </div>
-<div>
-    <a routerLink="/about-us">about us</a>
-    <a routerLink="/how-it-works">how it works</a>
-    <a routerLink="/auth/login" [queryParams]="{name: 'mouad', email: email}">login</a>
-<a routerLink="/public/all-books">all books</a>
-<a [routerLink]="['/public/book-details/', '1', 'author', '3']">book details from app</a>
-
-
-</div>
+<app-toolbar></app-toolbar>
 
 <router-outlet></router-outlet>
-<h1>Footer</h1>
+
+<app-footer></app-footer>

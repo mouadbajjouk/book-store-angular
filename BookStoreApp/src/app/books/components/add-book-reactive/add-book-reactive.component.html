@@ -1,0 +1,135 @@
+<h1>Add new book Reactive</h1>
+
+<button (click)="updateFormValues()">Update values</button>
+
+{{addBookForm.get('title')?.valid}}
+{{addBookForm.get('title')?.errors | json}}
+
+<!-- {{myForm.valid}} <br>
+{{myForm.invalid}} -->
+
+<!-- <table border="1">
+    <tr>
+        <td>Pristine</td>
+        <td>{{bookTitle.pristine}}</td>
+    </tr>
+    <tr>
+        <td>Dirty</td>
+        <td>{{bookTitle.dirty}}</td>
+    </tr>
+    <tr>
+        <td>Touched</td>
+        <td>{{bookTitle.touched}}</td>
+    </tr>
+    <tr>
+        <td>Status</td>
+        <td>{{bookTitle.status}}</td>
+    </tr>
+    <tr>
+        <td>Errors</td>
+        <td>{{bookTitle.errors | json}}</td>
+    </tr>
+</table> -->
+
+<form class="add-book-form" [formGroup]="addBookForm" (ngSubmit)="saveBook()">
+    <mat-radio-group aria-label="Select an option" class="toggle" name="formatType" formControlName="formatType">
+        <mat-radio-button value="pdf">PDF</mat-radio-button>
+        <mat-radio-button value="doc">Doc</mat-radio-button>
+      </mat-radio-group>
+
+      
+    <mat-form-field appearance="fill">
+        <mat-label>DOC</mat-label>
+        <input matInput name="doc" placeholder="Doc Format" formControlName="docFormat"> <!--="ngModel" is the type-->
+        <!-- <mat-hint [hidden]="bookTitle.valid">Please eneer title as7bi</mat-hint> -->
+        <mat-hint *ngIf="addBookForm.get('title')?.invalid && addBookForm.get('title')?.touched">
+            <!-- <span *ngIf="addBookForm.get('title')?.errors?.['required']"> Please eneer title as7bi</span>
+            <span *ngIf="addBookForm.get('title')?.errors?.['minlength']"> min length as7bi is 5 as7bi</span> -->
+            {{titleErrorMessage}}
+        </mat-hint>
+    </mat-form-field>
+
+    <mat-form-field appearance="fill">
+        <mat-label>PDF</mat-label>
+        <input matInput name="pdf" placeholder="PDF FOrmat" formControlName="pdfFormat"> <!--="ngModel" is the type-->
+        <!-- <mat-hint [hidden]="bookTitle.valid">Please eneer title as7bi</mat-hint> -->
+        <mat-hint *ngIf="addBookForm.get('title')?.invalid && addBookForm.get('title')?.touched">
+            <!-- <span *ngIf="addBookForm.get('title')?.errors?.['required']"> Please eneer title as7bi</span>
+            <span *ngIf="addBookForm.get('title')?.errors?.['minlength']"> min length as7bi is 5 as7bi</span> -->
+            {{titleErrorMessage}}
+        </mat-hint>
+    </mat-form-field>
+
+    <mat-form-field appearance="fill">
+        <mat-label>Title</mat-label>
+        <input matInput name="title" placeholder="Title" formControlName="title"> <!--="ngModel" is the type-->
+        <!-- <mat-hint [hidden]="bookTitle.valid">Please eneer title as7bi</mat-hint> -->
+        <mat-hint *ngIf="addBookForm.get('title')?.invalid && addBookForm.get('title')?.touched">
+            <!-- <span *ngIf="addBookForm.get('title')?.errors?.['required']"> Please eneer title as7bi</span>
+            <span *ngIf="addBookForm.get('title')?.errors?.['minlength']"> min length as7bi is 5 as7bi</span> -->
+            {{titleErrorMessage}}
+        </mat-hint>
+    </mat-form-field>
+
+    <div formArrayName="authors">
+        <div *ngFor="let auth of authors.controls; let i = index">
+            <mat-form-field appearance="fill" [formGroupName]="i">
+                <mat-label>Author</mat-label>
+                <input matInput name="author" placeholder="Author fullName" formControlName="fullName">
+            </mat-form-field>
+            <button (click)="removeAuthor(i)" mat-button>Remove</button>
+        </div>
+        <button (click)="addMoreAuthor()" mat-button>Add more</button>
+    </div>
+
+    <mat-form-field appearance="fill">
+        <mat-label>Pages</mat-label>
+        <input matInput type="number" name="pages" placeholder="Pages" formControlName="pages">
+    </mat-form-field>
+
+    <div class="price-container" formGroupName="price">
+        <mat-form-field appearance="fill">
+            <mat-label>Currency</mat-label>
+            <!-- <input matInput type="number" name="price" placeholder="Price" ngModel> -->
+            <mat-select name="currency" placeholder="Currency" formControlName="currency">
+                <mat-option *ngFor="let currency of currencies" [value]="currency.value">
+                    {{currency.viewValue}}
+                </mat-option>
+                <!-- <mat-option value="100">100 $</mat-option>
+                <mat-option value="200">200 $</mat-option>
+                <mat-option value="300">300 $</mat-option> -->
+            </mat-select>
+        </mat-form-field>
+
+        <mat-form-field appearance="fill">
+            <mat-label>Price</mat-label>
+            <!-- <input matInput type="number" name="price" placeholder="Price" ngModel> -->
+            <mat-select name="price" placeholder="Price" formControlName="value">
+                <mat-option *ngFor="let price of prices" [value]="price.value">
+                    {{price.viewValue}}
+                </mat-option>
+                <!-- <mat-option value="100">100 $</mat-option>
+                <mat-option value="200">200 $</mat-option>
+                <mat-option value="300">300 $</mat-option> -->
+            </mat-select>
+        </mat-form-field>
+    </div>
+
+    <mat-form-field appearance="fill">
+        <mat-label>Choose a date</mat-label>
+        <input matInput [matDatepicker]="picker" name="date" formControlName="publishedOn">
+        <mat-hint>MM/DD/YYYY</mat-hint>
+        <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+        <mat-datepicker #picker></mat-datepicker>
+    </mat-form-field>
+
+    <mat-slide-toggle class="toggle" name="isPublished" formControlName="isPublished">Slide me!</mat-slide-toggle>
+
+    <!-- <input type="text" name="title" placeholder="title" ngModel><br><br>
+    <input type="text" name="author" placeholder="author" ngModel><br><br>
+    <input type="number" name="pages" placeholder="pages" ngModel><br><br>
+    <input type="number" name="price" placeholder="price" ngModel><br><br> -->
+    <button type="submit" mat-raised-button color="primary" [disabled]="addBookForm.invalid">Saoopopove</button>
+</form>
+
+<h2>{{addBookForm.value | json}}</h2>

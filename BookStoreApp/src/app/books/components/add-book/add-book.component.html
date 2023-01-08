@@ -1,0 +1,80 @@
+<h1>Add new book</h1>
+
+{{myForm.valid}} <br>
+{{myForm.invalid}}
+
+<table border="1">
+    <tr>
+        <td>Pristine</td>
+        <td>{{bookTitle.pristine}}</td>
+    </tr>
+    <tr>
+        <td>Dirty</td>
+        <td>{{bookTitle.dirty}}</td>
+    </tr>
+    <tr>
+        <td>Touched</td>
+        <td>{{bookTitle.touched}}</td>
+    </tr>
+    <tr>
+        <td>Status</td>
+        <td>{{bookTitle.status}}</td>
+    </tr>
+    <tr>
+        <td>Errors</td>
+        <td>{{bookTitle.errors | json}}</td>
+    </tr>
+</table>
+
+<form #myForm="ngForm" (ngSubmit)="saveBook(myForm.value)" class="add-book-form">
+    <mat-form-field appearance="fill">
+        <mat-label>Title</mat-label>
+        <input matInput name="title" placeholder="Title" [(ngModel)]="model.title" required minlength="5"  #bookTitle="ngModel"> <!--="ngModel" is the type-->
+        <!-- <mat-hint [hidden]="bookTitle.valid">Please eneer title as7bi</mat-hint> -->
+        <mat-hint *ngIf="bookTitle.invalid && bookTitle.touched">
+            <span *ngIf="bookTitle.errors?.['required']"> Please eneer title as7bi</span>
+            <span *ngIf="bookTitle.errors?.['minlength']"> min length as7bi is 5 as7bi</span>
+        </mat-hint>
+    </mat-form-field>
+
+    <mat-form-field appearance="fill">
+        <mat-label>Author</mat-label>
+        <input matInput name="author" placeholder="Author" [(ngModel)]="model.author" required>
+    </mat-form-field>
+
+    <mat-form-field appearance="fill">
+        <mat-label>Pages</mat-label>
+        <input matInput type="number" name="pages" placeholder="Pages" [(ngModel)]="model.totalPages" max="100" min="10">
+    </mat-form-field>
+
+    <mat-form-field appearance="fill">
+        <mat-label>Price</mat-label>
+        <!-- <input matInput type="number" name="price" placeholder="Price" ngModel> -->
+        <mat-select name="price" placeholder="Price" [(ngModel)]="model.price.value">
+            <mat-option *ngFor="let price of prices" [value]="price.value">
+                {{price.viewValue}}
+            </mat-option>
+            <!-- <mat-option value="100">100 $</mat-option>
+            <mat-option value="200">200 $</mat-option>
+            <mat-option value="300">300 $</mat-option> -->
+        </mat-select>
+    </mat-form-field>
+
+    <mat-form-field appearance="fill">
+        <mat-label>Choose a date</mat-label>
+        <input matInput [matDatepicker]="picker" name="date" [(ngModel)]="model.publishedOn">
+        <mat-hint>MM/DD/YYYY</mat-hint>
+        <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+        <mat-datepicker #picker></mat-datepicker>
+      </mat-form-field>
+      
+    <mat-slide-toggle class="toggle" name="isPublished" [(ngModel)]="model.isPublished">Slide me!</mat-slide-toggle>
+
+    <!-- <input type="text" name="title" placeholder="title" ngModel><br><br>
+    <input type="text" name="author" placeholder="author" ngModel><br><br>
+    <input type="number" name="pages" placeholder="pages" ngModel><br><br>
+    <input type="number" name="price" placeholder="price" ngModel><br><br> -->
+    <button type="submit" mat-raised-button color="primary" [disabled]="myForm.invalid">Saoopopove</button>
+</form>
+
+<!-- <h2>{{myForm.value | json}}</h2> -->
